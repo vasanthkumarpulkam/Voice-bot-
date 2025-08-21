@@ -84,16 +84,74 @@ return PlainTextResponse(str(vr), media_type="text/xml")
 
 @app.post("/route")
 async def route_call(request: Request):
-form = await request.form()
-call_sid = request.query_params.get("sid", form.get("CallSid", ""))
-reason = (form.get("SpeechResult") or "").strip()
-logger.info(f"Reason: {reason}")
+    form = await request.form()
+    call_sid = request.query_params.get("sid", form.get("CallSid", ""))
+    reason = (form.get("SpeechResult") or "").strip()
+    logger.info(f"Reason: {reason}")
+
+    async with AsyncSessionLocal() as s:
+        log = await get_call(s, call_sid)
+        name_company = log.caller_name or ""
+
+        # Classify the call
+        decision = classify(name_company, reason)
+        logger.info(f"Classification: {decision}")
+
+        # Update call log with classification and reason
+        await update_call(s, call_sid,
+                         reason=reason,
+                         caller_type=decision.get("caller_type"),
+                         priority=decision.get("priority"),
+                         action=decision.get("action"),
+                         urgency_minutes=decision.get("urgency_minutes"))
+
+    vr = VoiceResponse()
+
+    # Handle the decision
+    if decision.get("action") == "connect_now":
+        vr.say("Please hold while I connect you to Vasanth.")
+        # In a real implementation, you would dial Vasanth's number here
+        # vr.dial(settings.vasanth_phone_number)
+        vr.say("Sorry, Vasanth is not available right now. Please leave a message after the beep.")
+        vr.record(
+            action=f"{settings.app_base_url}/recording?sid={call_sid}",
+            method="POST",
+            max_length=60,
+            finish_on_key="#"
+        )
+    else:
+        # Take a message
+        vr.say("Thanks for calling. Please leave a detailed message after the beep, and Vasanth will get back to you.")
+        vr.record(
+            action=f"{settings.app_base_url}/recording?sid={call_sid}",
+            method="POST",
+            max_length=60,
+            finish_on_key="#"
+        )
+
+    # Send notification if high priority
+    if decision.get("priority") == "high":
+        try:
+            from notify import sms_me
+            sms_me(f"High priority call from {name_company}: {reason}")
+        except Exception as e:
+            logger.error(f"Failed to send SMS notification: {e}")
+
+    return PlainTextResponse(str(vr), media_type="text/xml")
 
 
-async with AsyncSessionLocal() as s:
-log = await get_call(s, call_sid)
-name_company = log.caller_name or ""
+@app.post("/recording")
+async def handle_recording(request: Request):
+    """Handle the recording from the caller"""
+    form = await request.form()
+    call_sid = request.query_params.get("sid", form.get("CallSid", ""))
+    recording_url = form.get("RecordingUrl", "")
 
+    async with AsyncSessionLocal() as s:
+        await update_call(s, call_sid, recording_url=recording_url)
 
-decision = classify(name_company, reason)
-return PlainTextResponse(str(vr), media_type="text/xml")
+    vr = VoiceResponse()
+    vr.say("Thank you for your message. Vasanth will get back to you soon. Goodbye!")
+    vr.hangup()
+
+    return PlainTextResponse(str(vr), media_type="text/xml")
