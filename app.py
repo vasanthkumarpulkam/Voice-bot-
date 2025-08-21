@@ -22,7 +22,7 @@ app = FastAPI()
 
 @app.on_event("startup")
 async def startup():
-await init_db()
+    await init_db()
 
 
 async def _ensure_log(call_sid: str, from_number: str):
