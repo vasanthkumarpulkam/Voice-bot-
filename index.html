@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vasanth's AI Voice Assistant</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        h1 { text-align: center; margin-bottom: 2rem; }
+        .status { background: rgba(0, 255, 0, 0.2); padding: 1rem; border-radius: 8px; margin: 1rem 0; }
+        .endpoint { background: rgba(255, 255, 255, 0.1); padding: 1rem; margin: 0.5rem 0; border-radius: 8px; }
+        code { background: rgba(0, 0, 0, 0.3); padding: 0.2rem 0.5rem; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 Vasanth's AI Voice Assistant</h1>
+        
+        <div class="status">
+            <h3>✅ System Status: Online</h3>
+            <p>The voice bot is running on Netlify serverless functions</p>
+        </div>
+
+        <h3>📞 Twilio Webhook Endpoints:</h3>
+        <div class="endpoint">
+            <strong>Voice Webhook:</strong><br>
+            <code>https://your-site.netlify.app/voice</code>
+        </div>
+        <div class="endpoint">
+            <strong>Gather Name:</strong><br>
+            <code>https://your-site.netlify.app/gather_name</code>
+        </div>
+        <div class="endpoint">
+            <strong>Route Call:</strong><br>
+            <code>https://your-site.netlify.app/route</code>
+        </div>
+        <div class="endpoint">
+            <strong>Recording:</strong><br>
+            <code>https://your-site.netlify.app/recording</code>
+        </div>
+
+        <h3>🔧 Setup Instructions:</h3>
+        <ol>
+            <li>Set environment variables in Netlify dashboard</li>
+            <li>Configure Twilio webhook URL to point to <code>/voice</code></li>
+            <li>Test with a phone call</li>
+        </ol>
+
+        <h3>🌍 Environment Variables Needed:</h3>
+        <ul>
+            <li><code>OPENAI_API_KEY</code> - Your OpenAI API key</li>
+            <li><code>OPENAI_MODEL</code> - Model to use (default: gpt-3.5-turbo)</li>
+            <li><code>TWILIO_ACCOUNT_SID</code> - Your Twilio Account SID</li>
+            <li><code>TWILIO_AUTH_TOKEN</code> - Your Twilio Auth Token</li>
+        </ul>
+    </div>
+</body>
+</html>
