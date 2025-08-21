@@ -26,11 +26,11 @@ async def startup():
 
 
 async def _ensure_log(call_sid: str, from_number: str):
-async with AsyncSessionLocal() as s:
-existing = await get_call(s, call_sid)
-if existing:
-return existing
-return await save_call(s, call_sid=call_sid, from_number=from_number)
+    async with AsyncSessionLocal() as s:
+        existing = await get_call(s, call_sid)
+        if existing:
+            return existing
+        return await save_call(s, call_sid=call_sid, from_number=from_number)
 
 
 @app.post("/voice")
