@@ -20,6 +20,11 @@ templates = Jinja2Templates(directory="templates")
 app = FastAPI()
 
 
+@app.get("/")
+async def health_check():
+    return {"status": "healthy", "message": "Vasanth's AI Assistant is running"}
+
+
 @app.on_event("startup")
 async def startup():
     await init_db()
