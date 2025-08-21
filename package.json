@@ -1,0 +1,19 @@
+{
+  "name": "vasanth-voice-bot",
+  "version": "1.0.0",
+  "description": "AI-powered voice bot for call screening",
+  "main": "index.js",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'No build required for serverless functions'"
+  },
+  "dependencies": {
+    "@netlify/functions": "^2.8.1",
+    "twilio": "^5.3.2",
+    "openai": "^4.63.0",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.36.2"
+  }
+}

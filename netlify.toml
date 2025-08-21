@@ -1,0 +1,37 @@
+[build]
+  command = "npm install"
+  publish = "."
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# Webhook endpoints for Twilio
+[[redirects]]
+  from = "/voice"
+  to = "/.netlify/functions/voice"
+  status = 200
+
+[[redirects]]
+  from = "/gather_name"
+  to = "/.netlify/functions/gather_name"
+  status = 200
+
+[[redirects]]
+  from = "/route"
+  to = "/.netlify/functions/route"
+  status = 200
+
+[[redirects]]
+  from = "/recording"
+  to = "/.netlify/functions/recording"
+  status = 200
+
+# Health check endpoint
+[[redirects]]
+  from = "/health"
+  to = "/.netlify/functions/health"
+  status = 200
