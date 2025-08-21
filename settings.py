@@ -18,12 +18,12 @@ class Settings:
     # Recruiter settings
     recruiter_always_connect: bool = os.getenv("RECRUITER_ALWAYS_CONNECT", "false").lower() == "true"
     
-    # Twilio configuration (if needed)
+    # Twilio configuration
     twilio_account_sid: str = os.getenv("TWILIO_ACCOUNT_SID", "")
     twilio_auth_token: str = os.getenv("TWILIO_AUTH_TOKEN", "")
-    twilio_phone_number: str = os.getenv("TWILIO_PHONE_NUMBER", "")
-    
+    twilio_number: str = os.getenv("TWILIO_PHONE_NUMBER", "")
+
     # Notification settings
-    admin_phone_number: str = os.getenv("ADMIN_PHONE_NUMBER", "")
+    forward_to: str = os.getenv("ADMIN_PHONE_NUMBER", "")
 
 settings = Settings()
