@@ -7,13 +7,13 @@
 [![Twilio](https://img.shields.io/badge/Twilio-F22F46?logo=twilio&logoColor=white)](https://twilio.com)
 [![OpenAI](https://img.shields.io/badge/OpenAI-412991?logo=openai&logoColor=white)](https://openai.com)
 [![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
 
 ---
 
 ## Overview
 
-Job hunting means recruiters call at unpredictable times — mixed in with telemarketers, spam, and the occasional call that actually matters.
+Job hunting means recruiters call at unpredictable times - mixed in with telemarketers, spam, and the occasional call that actually matters.
 
 This service answers every inbound call, asks the caller who they are and why they're calling, sends that to an LLM for classification, and then either connects the call immediately or takes a message and texts you a summary. Every call is logged and browsable in a dashboard.
 
@@ -58,7 +58,7 @@ The system prompt encodes explicit routing policy rather than leaving it to mode
 
 ## Features
 
-- Natural-speech intake via Twilio `<Gather>` — no keypad menus
+- Natural-speech intake via Twilio `<Gather>` - no keypad menus
 - LLM classification returning strict, schema-constrained JSON
 - Automatic call forwarding for high-priority callers
 - Voicemail capture with SMS summary sent to your phone
@@ -132,7 +132,7 @@ streamlit run dashboard.py
 
 ```
 Voice-bot-/
-├── app.py             FastAPI app — Twilio webhooks and TwiML responses
+├── app.py             FastAPI app - Twilio webhooks and TwiML responses
 ├── classify.py        OpenAI caller classification
 ├── db.py              Async SQLAlchemy models and call-log persistence
 ├── notify.py          Outbound SMS notifications
@@ -148,7 +148,7 @@ Voice-bot-/
 
 | Method | Endpoint | Description |
 |---|---|---|
-| `POST` | `/voice` | Twilio entry point — greets and gathers caller intent |
+| `POST` | `/voice` | Twilio entry point - greets and gathers caller intent |
 | `POST` | `/handle` | Processes gathered speech, classifies, routes the call |
 | `POST` | `/recording` | Receives voicemail recordings |
 
@@ -160,10 +160,6 @@ Voice-bot-/
 - [ ] Caller allowlist / blocklist
 - [ ] Tests for the classification layer with recorded fixtures
 
-## License
-
-MIT — see [LICENSE](LICENSE).
-
 ## Author
 
-**Vasanth Kumar Pulkam** — [GitHub](https://github.com/vasanthkumarpulkam)
+**Vasanth Kumar Pulkam** - [GitHub](https://github.com/vasanthkumarpulkam)
